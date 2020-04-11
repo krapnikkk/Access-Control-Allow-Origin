@@ -7,10 +7,11 @@
 		"scripts": ["background.js"]
 	},
 	"browser_action": {
-		"default_icon": "off.png",
+		"default_icon": "assets/images/off.png",
 		"default_title": "Allow-Control-Allow-Origin",
 		"default_popup": "popup.html"
 	},
+	"default_locale": "en",
 	"permissions": [
 		"storage",
 		"webRequest",
@@ -18,6 +19,6 @@
 		"<all_urls>"
 	],
 	"web_accessible_resources": [
-		"on.png","off.png"
+		"assets/images/on.png","assets/images/off.png"
 	]
 }
