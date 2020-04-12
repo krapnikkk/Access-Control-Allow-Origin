@@ -24,7 +24,7 @@ var DefaultSettings = {
  * Cookie
  */
 var request_opt_extraInfoSpec = ['blocking', 'requestHeaders', "extraHeaders"],
-	response_opt_extraInfoSpec = ['blocking', 'responseHeaders', "extraHeaders"];
+	response_opt_extraInfoSpec = ['blocking', 'responseHeaders'];
 
 var exposedHeaders;
 
@@ -37,19 +37,19 @@ var requestRules = [
 	// 	'mandatory': false,
 	// 	'fn': null
 	// },
-	// {
-	// 	'data': {
-	// 		'name': 'Access-Control-Request-Headers',
-	// 		'value': null
-	// 	},
-	// 	'mandatory': false,
-	// 	'fn': function (rule, header, details) {
-	// 		if (accessControlRequests[details.requestId] === void 0) {
-	// 			accessControlRequests[details.requestId] = {};
-	// 		}
-	// 		accessControlRequests[details.requestId].headers = header.value;
-	// 	}
-	// },
+	{
+		'data': {
+			'name': 'Access-Control-Request-Headers',
+			'value': null
+		},
+		'mandatory': false,
+		'fn': function (rule, header, details) {
+			if (accessControlRequests[details.requestId] === void 0) {
+				accessControlRequests[details.requestId] = {};
+			}
+			accessControlRequests[details.requestId].headers = header.value;
+		}
+	},
 	// {
 	// 	'data': {
 	// 		'name': 'Referer',
@@ -68,8 +68,14 @@ var responseRules = [
 			'value': '*'
 		},
 		'mandatory': true,
-		'fn': null
-	}, {
+		'fn': function (rule, header, details) {
+			if (accessControlRequests[details.requestId] !== void 0) {
+				header.value = accessControlRequests[details.requestId].headers;
+			}
+			console.log(details);
+		}
+	},
+	{
 		'data': {
 			'name': 'Access-Control-Allow-Headers',
 			'value': null
@@ -81,14 +87,19 @@ var responseRules = [
 			}
 
 		}
-	}, {
-		'data': {
-			'name': 'Access-Control-Allow-Credentials',
-			'value': 'true'
-		},
-		'mandatory': false,
-		'fn': null
-	}, {
+	}, 
+	/**
+	 * https://segmentfault.com/q/1010000008636959/a-1020000008640047
+	 */
+	// {
+	// 	'data': {
+	// 		'name': 'Access-Control-Allow-Credentials',
+	// 		'value': 'true'
+	// 	},
+	// 	'mandatory': false,
+	// 	'fn': null
+	// }, 
+	{
 		'data': {
 			'name': 'Access-Control-Allow-Methods',
 			'value': 'POST, GET, OPTIONS, PUT, DELETE'
