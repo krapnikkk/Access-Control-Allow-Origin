@@ -68,7 +68,14 @@ var responseRules = [
 			'value': '*'
 		},
 		'mandatory': true,
-		'fn': null
+		'fn': function (rule, header, details) {
+			/**
+			 * fix bug
+			 * The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'.
+			 */
+			var initiator = details.initiator;
+			rule.value = initiator;
+		}
 	},
 	{
 		'data': {
@@ -91,7 +98,7 @@ var responseRules = [
 			'name': 'Access-Control-Allow-Credentials',
 			'value': 'true'
 		},
-		'mandatory': false,
+		'mandatory': true,
 		'fn': null
 	},
 	{
@@ -183,9 +190,9 @@ var responseListener = function (details) {
 		}
 
 		//remove The 'Access-Control-Allow-Origin' header contains multiple values
-		for (var i = details.responseHeaders.length-1; i > 0; i--) {
+		for (var i = details.responseHeaders.length - 1; i > 0; i--) {
 			var header = details.responseHeaders[i];
-			
+
 			if (rule.data.name.toLowerCase() == header.name) {
 				var detail = details.responseHeaders.splice(i, 1);
 			}
