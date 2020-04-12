@@ -1,6 +1,15 @@
-Access-Control-Allow-Origin
+release cors
 ===========================
+在[原插件](https://github.com/vitvad/Access-Control-Allow-Origin)的基础上升级&扩展，解除HTTP访问控制（CORS）的各种限制,requestHeader和responeHeader各种可配置化~
 
-[![Join the chat at https://gitter.im/vitvad/Access-Control-Allow-Origin](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/vitvad/Access-Control-Allow-Origin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+已适配chrome 72+
 
-Chrome extension: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi
+# todo list
+
+- [ ] requestHeader增加Referer配置
+
+- [ ] 资源重定向
+
+- [ ] 想到再挖坑
+
+

@@ -1,8 +1,8 @@
 {
-	"name": "Allow-Control-Allow-Origin: *",
-	"version": "1.0.2",
+	"name": "release cors",
+	"version": "1.0.4",
 	"manifest_version": 2,
-	"description": "Allows to you request any site with ajax from any source. Adds to response 'Allow-Control-Allow-Origin: *' header",
+	"description": "解除HTTP访问控制（CORS）的各种限制,requestHeader和responeHeader各种可配置化",
 	"background": {
 		"scripts": ["background.js"]
 	},

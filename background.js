@@ -74,7 +74,10 @@ var responseRules = [
 			 * The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'.
 			 */
 			var initiator = details.initiator;
-			rule.value = initiator;
+			if(rule.value != initiator){
+				rule.value = initiator;
+			}
+			
 		}
 	},
 	{
