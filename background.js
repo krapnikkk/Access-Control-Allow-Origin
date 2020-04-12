@@ -37,19 +37,19 @@ var requestRules = [
 	// 	'mandatory': false,
 	// 	'fn': null
 	// },
-	{
-		'data': {
-			'name': 'Access-Control-Request-Headers',
-			'value': null
-		},
-		'mandatory': false,
-		'fn': function (rule, header, details) {
-			if (accessControlRequests[details.requestId] === void 0) {
-				accessControlRequests[details.requestId] = {};
-			}
-			accessControlRequests[details.requestId].headers = header.value;
-		}
-	},
+	// {
+	// 	'data': {
+	// 		'name': 'Access-Control-Request-Headers',
+	// 		'value': null
+	// 	},
+	// 	'mandatory': false,
+	// 	'fn': function (rule, header, details) {
+	// 		if (accessControlRequests[details.requestId] === void 0) {
+	// 			accessControlRequests[details.requestId] = {};
+	// 		}
+	// 		accessControlRequests[details.requestId].headers = header.value;
+	// 	}
+	// },
 	// {
 	// 	'data': {
 	// 		'name': 'Referer',
@@ -68,12 +68,7 @@ var responseRules = [
 			'value': '*'
 		},
 		'mandatory': true,
-		'fn': function (rule, header, details) {
-			if (accessControlRequests[details.requestId] !== void 0) {
-				header.value = accessControlRequests[details.requestId].headers;
-			}
-			console.log(details);
-		}
+		'fn': null
 	},
 	{
 		'data': {
@@ -87,18 +82,18 @@ var responseRules = [
 			}
 
 		}
-	}, 
+	},
 	/**
 	 * https://segmentfault.com/q/1010000008636959/a-1020000008640047
 	 */
-	// {
-	// 	'data': {
-	// 		'name': 'Access-Control-Allow-Credentials',
-	// 		'value': 'true'
-	// 	},
-	// 	'mandatory': false,
-	// 	'fn': null
-	// }, 
+	{
+		'data': {
+			'name': 'Access-Control-Allow-Credentials',
+			'value': 'true'
+		},
+		'mandatory': false,
+		'fn': null
+	},
 	{
 		'data': {
 			'name': 'Access-Control-Allow-Methods',
@@ -184,6 +179,15 @@ var responseListener = function (details) {
 
 			if (rule.data.value) {
 				details.responseHeaders.push(rule.data);
+			}
+		}
+
+		//remove The 'Access-Control-Allow-Origin' header contains multiple values
+		for (var i = details.responseHeaders.length-1; i > 0; i--) {
+			var header = details.responseHeaders[i];
+			
+			if (rule.data.name.toLowerCase() == header.name) {
+				var detail = details.responseHeaders.splice(i, 1);
 			}
 		}
 	});
