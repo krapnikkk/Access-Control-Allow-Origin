@@ -8,8 +8,58 @@
 	<script src="assets/js/popup.js"></script>
 </head>
 
-<body ng-app="cors" ng-controller="PopupCtrl">
+<body ng-app="app">
 	<div class="bar bar-header bar-positive">
+		<h1 class="title">setting</h1>
+	</div>
+	<ion-tabs class="tabs-icon-only tabs-positive">
+		<ion-tab title="About" icon-on="icon ion-ios-clock" icon-off="icon ion-ios-clock-outline">
+			<header class="bar bar-header bar-positive">
+				<h1 class="title">cors</h1>
+			</header>
+			<ion-content has-header="false" ng-controller="cors">
+				<div class="has-header">
+					<div class="list">
+						<ion-toggle ng-model="active" toggle-class="toggle-calm">{{i18n.sharingHeader}}</ion-toggle>
+						<div class="item item-divider">
+							{{i18n.allowHeaders}}
+						</div>
+						<text-option option="exposedHeaders" placeholder="comma-separated list of headers ...">
+						</text-option>
+						<div class="item item-divider">
+							{{i18n.urlPatterns}}
+							<a class="icon ion-link"
+								ng-click="openInNewTab('https://developer.chrome.com/extensions/match_patterns');"></a>
+						</div>
+						<div class="item item-input-inset">
+							<label class="item-input-wrapper">
+								<input type="text" placeholder="URL or URL pattern" ng-model="url"
+									submit-on-enter="addUrl()">
+							</label>
+							<a class="button button-icon button-small icon ion-plus-circled submit-action"
+								ng-click="addUrl();"></a>
+						</div>
+						<div class="item item-icon-right animate-enter-leave" ng-repeat="url in urls">
+							{{url}}
+							<a class="button button-icon button-small icon ion-ios7-trash-outline"
+								ng-click="removeUrl($index);"></a>
+						</div>
+					</div>
+				</div>
+			</ion-content>
+		</ion-tab>
+
+		<ion-tab title="Settings" icon-on="icon ion-ios-gear" icon-off="icon ion-ios-gear-outline">
+			<header class="bar bar-header bar-positive">
+				<h1 class="title">Settings</h1>
+			</header>
+			<ion-content has-header="true">
+				<h1>Settings</h1>
+			</ion-content>
+		</ion-tab>
+
+	</ion-tabs>
+	<!-- <div class="bar bar-header bar-positive">
 		<h1 class="title">{{i18n.settings}}</h1>
 	</div>
 	<div class="has-header">
@@ -36,7 +86,7 @@
 					ng-click="removeUrl($index);"></a>
 			</div>
 		</div>
-	</div>
+	</div> -->
 </body>
 
 </html>
